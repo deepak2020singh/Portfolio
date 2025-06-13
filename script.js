@@ -1,76 +1,72 @@
-function init() {
-  gsap.registerPlugin(ScrollTrigger);
 
-  const locoScroll = new LocomotiveScroll({
-    el: document.querySelector(".main"),
-    smooth: true,
-  });
-
-  locoScroll.on("scroll", ScrollTrigger.update);
-
-  ScrollTrigger.scrollerProxy(".main", {
-    scrollTop(value) {
-      return arguments.length
-        ? locoScroll.scrollTo(value, { duration: 0, disableLerp: true })
-        : locoScroll.scroll.instance.scroll.y;
-    },
-    getBoundingClientRect() {
-      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    },
-    pinType: document.querySelector(".main").style.transform ? "transform" : "fixed",
-  });
-
-  ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-  ScrollTrigger.refresh();
-}
-
-init();
-
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page1 h1",
-    scroller: ".main",
-    start: "top 30%",
-    end: "top 0%",
-    scrub: 1,
-  },
-});
-
-tl.to(
-  ".page1 h1",
-  {
-    x: -100,
-  },
-  "anim"
-);
-
-tl.to(
-  ".page1 h2",
-  {
-    x: 100,
-  },
-  "anim"
-);
-
-tl.to(
-  ".page1 video",
-  {
-    width: "90%",
-  },
-  "anim"
-);
-
-const tl2 = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page1 h1",
-    scroller: ".main",
-    start: "top -100%",
-    end: "top -120%",
-    scrub: 1,
-  },
-});
-
-tl2.to(".main", {
-  backgroundColor: "#fff",
-  ease: "none",
-});
+        // Mobile Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Portfolio filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show an alert
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+        
+        // Sticky header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('sticky', window.scrollY > 0);
+        });
+    
