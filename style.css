@@ -148,6 +148,27 @@
             color: var(--on-secondary);
         }
 
+.btn-download {
+    background-color: transparent;
+    color: var(--primary-light);
+    border: 1px solid var(--primary-light);
+    margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-download i {
+    margin-left: 8px;
+}
+
+.btn-download:hover {
+    background-color: var(--primary-light);
+    color: var(--on-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
         /* About Section */
         .section {
             padding: 100px 0;
@@ -576,5 +597,9 @@
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
+            .btn-download {
+                margin-left: 0;
+                margin-top: 15px;
+                }
         }
     
