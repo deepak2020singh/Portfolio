@@ -28,6 +28,26 @@
                 });
             });
         });
+
+// Add to existing script.js
+
+// Download CV fallback
+document.querySelector('.btn-download').addEventListener('click', function(e) {
+    // Check if the cv.pdf file exists (basic client-side check)
+    fetch('cv.pdf')
+        .then(response => {
+            if (!response.ok) {
+                e.preventDefault();
+                alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
+            }
+        })
+        .catch(() => {
+            e.preventDefault();
+            alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
+        });
+});
+
+
         
         // Portfolio filtering
         const filterBtns = document.querySelectorAll('.filter-btn');
