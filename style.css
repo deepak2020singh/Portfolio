@@ -321,44 +321,59 @@
             color: var(--secondary-color);
         }
 
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-            position: relative;
-        }
+        /* About Image Section */
+.about-image {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    position: relative;
+    margin: 0 auto; /* Center the container */
+    max-width: 100%; /* Ensure it doesn't overflow */
+    padding: 20px; /* Add some spacing */
+}
 
-        .about-image img {
-            max-width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all var(--transition-speed);
-            position: relative;
-            z-index: 1;
-        }
+.about-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed);
+    position: relative;
+    z-index: 1;
+    display: block; /* Ensure proper centering */
+    margin: 0 auto; /* Center the image */
+}
 
-        .about-image::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 3px solid var(--secondary-color);
-            border-radius: 10px;
-            top: 20px;
-            left: 20px;
-            z-index: 0;
-            transition: all var(--transition-speed);
-        }
+.about-image::before {
+    content: '';
+    position: absolute;
+    width: calc(100% - 40px); /* Account for padding */
+    height: calc(100% - 40px); /* Account for padding */
+    border: 3px solid var(--secondary-color);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfect centering */
+    z-index: 0;
+    transition: all var(--transition-speed);
+}
 
-        .about-image:hover::before {
-            top: 15px;
-            left: 15px;
-        }
+.about-image:hover::before {
+    width: calc(100% - 2px); /* Slightly larger on hover */
+    height: calc(100% - 20px); /* Slightly larger on hover */
+}
 
-        .about-image:hover img {
-            transform: translate(-5px, -5px);
-        }
+.about-image:hover img {
+    transform: translate(-5px, -5px);
+}
 
+/* Adjust the about-content layout */
+.about-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+    flex-wrap: wrap;
+    gap: 30px; /* Add consistent spacing */
+}
         /* Services Section */
         .services {
             background-color: var(--surface);
