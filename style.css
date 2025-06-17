@@ -330,7 +330,7 @@
 
         .about-image img {
             max-width: 100%;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all var(--transition-speed);
             position: relative;
