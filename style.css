@@ -322,6 +322,7 @@
         }
 
         /* About Image Section */
+/* About Image Section */
 .about-image {
     flex: 1;
     min-width: 300px;
@@ -358,8 +359,8 @@
 }
 
 .about-image:hover::before {
-    width: calc(100% - 2px); /* Slightly larger on hover */
-    height: calc(100% - 20px); /* Slightly larger on hover */
+    width: calc(100% - 30px); /* Slightly larger on hover */
+    height: calc(100% - 30px); /* Slightly larger on hover */
 }
 
 .about-image:hover img {
@@ -372,7 +373,7 @@
     align-items: center;
     justify-content: center; /* Center items horizontally */
     flex-wrap: wrap;
-    gap: 30px; /* Add consistent spacing */
+    gap: 40px; /* Add consistent spacing */
 }
         /* Services Section */
         .services {
