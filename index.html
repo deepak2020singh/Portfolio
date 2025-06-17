@@ -6,7 +6,8 @@
     <title>Deepak Singh | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+   <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 </head>
 <body>
     <!-- Header -->
@@ -21,13 +22,26 @@
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
                 </ul>
                 <div class="hamburger">
                     <i class="fas fa-bars"></i>
                 </div>
+                <button class="theme-toggle mobile-theme" id="mobileThemeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
             </nav>
         </div>
     </header>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -38,8 +52,7 @@
                 <div class="hero-btns">
                     <a href="#contact" class="btn">Hire Me</a>
                     <a href="#portfolio" class="btn btn-secondary">View Work</a>
-               <a href="cv.pdf" download class="btn btn-download">Download CV <i class="fas fa-download"></i></a>
-            
+                    <a href="cv.pdf" download class="btn btn-download">Download CV <i class="fas fa-download"></i></a>
                 </div>
             </div>
         </div>
@@ -315,6 +328,7 @@
             <p class="footer-text">&copy; 2023 Deepak Singh. All Rights Reserved.</p>
         </div>
     </footer>
-<script src="script.js"></script>
+
+   <script src="script.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
