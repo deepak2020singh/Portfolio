@@ -1,5 +1,5 @@
 
-        // Mobile Navigation
+      // Mobile Navigation
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
         
@@ -29,26 +29,22 @@
             });
         });
 
-// Add to existing script.js
-
-// Download CV fallback
-document.querySelector('.btn-download').addEventListener('click', function(e) {
-    // Check if the cv.pdf file exists (basic client-side check)
-    fetch('cv.pdf')
-        .then(response => {
-            if (!response.ok) {
-                e.preventDefault();
-                alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
-            }
-        })
-        .catch(() => {
-            e.preventDefault();
-            alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
+        // Download CV fallback
+        document.querySelector('.btn-download').addEventListener('click', function(e) {
+            // Check if the cv.pdf file exists (basic client-side check)
+            fetch('cv.pdf')
+                .then(response => {
+                    if (!response.ok) {
+                        e.preventDefault();
+                        alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
+                });
         });
-});
 
-
-        
         // Portfolio filtering
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -88,5 +84,90 @@ document.querySelector('.btn-download').addEventListener('click', function(e) {
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             header.classList.toggle('sticky', window.scrollY > 0);
+        });
+        
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') || 
+                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Apply the current theme
+        if (currentTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // Theme toggle event
+        function toggleTheme() {
+            body.classList.toggle('light-theme');
+            
+            if (body.classList.contains('light-theme')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                mobileThemeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+        
+        // Intersection Observer for scroll animations
+        const sections = document.querySelectorAll('.section');
+        
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Animate skills on hover
+        const skills = document.querySelectorAll('.skill');
+        
+        skills.forEach(skill => {
+            skill.addEventListener('mouseenter', () => {
+                skill.classList.add('pulse');
+            });
+            
+            skill.addEventListener('mouseleave', () => {
+                skill.classList.remove('pulse');
+            });
         });
     
