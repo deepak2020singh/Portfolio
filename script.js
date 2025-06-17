@@ -29,21 +29,24 @@
             });
         });
 
-        // Download CV fallback
-        document.querySelector('.btn-download').addEventListener('click', function(e) {
-            // Check if the cv.pdf file exists (basic client-side check)
-            fetch('cv.pdf')
-                .then(response => {
-                    if (!response.ok) {
-                        e.preventDefault();
-                        alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
-                    }
-                })
-                .catch(() => {
-                    e.preventDefault();
-                    alert('CV file is not available. Please save this page as a PDF using your browser\'s print option.');
-                });
+// Download CV fallback
+    document.querySelector('.btn-download').addEventListener('click', function(e) {
+    // Check if the file exists
+    fetch('deepakcv.pdf')
+        .then(response => {
+            if (!response.ok) {
+                e.preventDefault();
+                const proceed = confirm('CV file is not available. Would you like to view it in a new tab instead?');
+                if (proceed) {
+                    window.open('deepakcv.pdf', '_blank'); // Opens the PDF in a new tab
+                }
+            }
+        })
+        .catch(error => {
+            e.preventDefault();
+            alert('CV download is currently unavailable. Please contact me directly for my resume.');
         });
+});
 
         // Portfolio filtering
         const filterBtns = document.querySelectorAll('.filter-btn');
