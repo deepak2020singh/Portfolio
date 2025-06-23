@@ -166,19 +166,21 @@
         }
 
 /* Add to your existing CSS */
+/* Typing animation styles */
 .hero h1 {
-    min-height: 120px; /* Prevent layout shift during animation */
+    min-height: 120px; /* Prevent layout shift */
     position: relative;
+    display: inline-block; /* Needed for cursor positioning */
 }
 
-.typing-cursor {
+.typewriter-cursor {
     display: inline-block;
     width: 2px;
     height: 1em;
     background-color: var(--secondary-color);
-    margin-left: 2px;
     animation: blink 1s infinite;
-    vertical-align: middle;
+    position: absolute;
+    margin-left: 2px;
 }
 
 @keyframes blink {
@@ -186,12 +188,11 @@
     50% { opacity: 0; }
 }
 
-/* Ensure the span within h1 keeps the accent color */
+/* Ensure the span keeps the accent color */
 .hero h1 span {
     color: var(--secondary-color);
 }
 
-        
 
         .hero p {
             font-size: 18px;
