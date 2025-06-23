@@ -189,7 +189,7 @@
 }
 
 /* Ensure the span keeps the accent color */
-.hero h1 span {
+.hero .hero-content h1 span {
     color: var(--secondary-color);
 }
 
