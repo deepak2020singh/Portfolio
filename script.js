@@ -165,108 +165,111 @@ skills.forEach(skill => {
 });
 
 // Typing animation for hero text
+// Letter-by-letter typing animation
 function typeWriter() {
     const heroTitle = document.querySelector('.hero h1');
     const originalHTML = heroTitle.innerHTML;
-    heroTitle.innerHTML = '';
     
-    // Create a cursor element
-    const cursor = document.createElement('span');
-    cursor.className = 'typing-cursor';
-    heroTitle.appendChild(cursor);
-    
-    // Extract text nodes while preserving HTML structure
+    // Save the original HTML structure
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = originalHTML;
-    const textNodes = [];
     
-    function extractTextNodes(node) {
+    // Create cursor element
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    heroTitle.innerHTML = '';
+    heroTitle.appendChild(cursor);
+    
+    let textToType = '';
+    let htmlStructure = [];
+    
+    // Extract text nodes while preserving HTML structure
+    function extractText(node, parentTag = '') {
         if (node.nodeType === Node.TEXT_NODE) {
-            textNodes.push(node);
+            textToType += node.textContent;
+            htmlStructure.push({
+                type: 'text',
+                content: node.textContent,
+                parentTag: parentTag
+            });
         } else {
+            const tag = node.tagName.toLowerCase();
+            htmlStructure.push({
+                type: 'tagStart',
+                tag: tag,
+                attrs: Array.from(node.attributes).map(attr => ({
+                    name: attr.name,
+                    value: attr.value
+                }))
+            });
+            
+            // Process child nodes
             for (let child of node.childNodes) {
-                extractTextNodes(child);
+                extractText(child, tag);
             }
+            
+            htmlStructure.push({
+                type: 'tagEnd',
+                tag: tag
+            });
         }
     }
     
-    extractTextNodes(tempDiv);
+    extractText(tempDiv);
     
-    let currentTextNodeIndex = 0;
-    let currentText = '';
-    let currentWordIndex = 0;
-    let words = [];
+    let currentChar = 0;
+    let currentPosition = 0;
+    let isTagOpen = false;
+    let currentTag = '';
     
-    function processNextTextNode() {
-        if (currentTextNodeIndex < textNodes.length) {
-            const textNode = textNodes[currentTextNodeIndex];
-            words = textNode.textContent.split(/(\s+)/).filter(word => word.trim().length > 0 || word === ' ');
-            currentWordIndex = 0;
-            typeNextWord();
+    function typeNextLetter() {
+        if (currentPosition < htmlStructure.length) {
+            const currentItem = htmlStructure[currentPosition];
+            
+            if (currentItem.type === 'tagStart') {
+                // Open HTML tag
+                let tag = `<${currentItem.tag}`;
+                currentItem.attrs.forEach(attr => {
+                    tag += ` ${attr.name}="${attr.value}"`;
+                });
+                tag += '>';
+                heroTitle.insertAdjacentHTML('beforeend', tag);
+                currentPosition++;
+                setTimeout(typeNextLetter, 50);
+            } 
+            else if (currentItem.type === 'tagEnd') {
+                // Close HTML tag
+                heroTitle.insertAdjacentHTML('beforeend', `</${currentItem.tag}>`);
+                currentPosition++;
+                setTimeout(typeNextLetter, 50);
+            } 
+            else if (currentItem.type === 'text' && currentChar < currentItem.content.length) {
+                // Type next character
+                heroTitle.insertAdjacentText('beforeend', currentItem.content[currentChar]);
+                currentChar++;
+                
+                // Move cursor to the end
+                cursor.remove();
+                heroTitle.appendChild(cursor);
+                
+                // Vary speed slightly for natural effect
+                const speed = Math.random() * 50 + 50; // Between 50-100ms
+                setTimeout(typeNextLetter, speed);
+            } 
+            else {
+                // Move to next text node
+                currentChar = 0;
+                currentPosition++;
+                setTimeout(typeNextLetter, 100);
+            }
         } else {
             // Animation complete - remove cursor
             cursor.style.display = 'none';
         }
     }
     
-    function typeNextWord() {
-        if (currentWordIndex < words.length) {
-            currentText += words[currentWordIndex];
-            
-            // Reconstruct the HTML with the new text
-            let reconstructedHTML = '';
-            let nodeIndex = 0;
-            
-            function reconstructHTML(node) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    if (nodeIndex === currentTextNodeIndex) {
-                        reconstructedHTML += currentText;
-                    } else if (nodeIndex < currentTextNodeIndex) {
-                        reconstructedHTML += node.textContent;
-                    }
-                    nodeIndex++;
-                } else {
-                    reconstructedHTML += `<${node.nodeName.toLowerCase()}`;
-                    
-                    // Copy attributes
-                    if (node.attributes) {
-                        for (let attr of node.attributes) {
-                            reconstructedHTML += ` ${attr.name}="${attr.value}"`;
-                        }
-                    }
-                    
-                    reconstructedHTML += '>';
-                    
-                    // Process child nodes
-                    for (let child of node.childNodes) {
-                        reconstructHTML(child);
-                    }
-                    
-                    reconstructedHTML += `</${node.nodeName.toLowerCase()}>`;
-                }
-            }
-            
-            reconstructHTML(tempDiv);
-            
-            heroTitle.innerHTML = reconstructedHTML;
-            heroTitle.appendChild(cursor);
-            
-            currentWordIndex++;
-            
-            // Adjust delay based on word length (longer words get slightly more time)
-            const word = words[currentWordIndex - 1];
-            const delay = word.length > 5 ? 200 : word === ' ' ? 100 : 150;
-            
-            setTimeout(typeNextWord, delay);
-        } else {
-            currentTextNodeIndex++;
-            currentText = '';
-            processNextTextNode();
-        }
-    }
-    
-    // Start the typing effect after a small delay
-    setTimeout(processNextTextNode, 500);
+    // Start typing after a short delay
+    setTimeout(typeNextLetter, 500);
 }
 
 // Start the typing animation when the page loads
