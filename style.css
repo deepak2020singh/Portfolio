@@ -165,9 +165,33 @@
             animation: fadeInUp 1s ease-out;
         }
 
-        .hero h1 span {
-            color: var(--secondary-color);
-        }
+/* Add to your existing CSS */
+.hero h1 {
+    min-height: 120px; /* Prevent layout shift during animation */
+    position: relative;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: var(--secondary-color);
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Ensure the span within h1 keeps the accent color */
+.hero h1 span {
+    color: var(--secondary-color);
+}
+
+        
 
         .hero p {
             font-size: 18px;
