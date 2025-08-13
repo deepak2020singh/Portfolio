@@ -20,7 +20,7 @@
     --light-on-surface: #333333;
     
     /* Animation variables */
-    --transition-speed: 0.3s;
+    --transition-speed: 0.4s;
 }
 
 /* Light theme */
@@ -147,7 +147,7 @@ nav {
     height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 80px;
+    padding-top: 70px;
     background: linear-gradient(to right, var(--background), rgba(30, 30, 30, 0.8)), 
                 url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
     transition: all var(--transition-speed);
@@ -161,13 +161,14 @@ nav {
     font-size: 48px;
     margin-bottom: 20px;
     line-height: 1.2;
+    min-height: 120px;
+    position: relative;
+    display: inline-block;
 }
 
-/* Typing animation styles */
-.hero h1 {
-    min-height: 120px; /* Prevent layout shift */
-    position: relative;
-    display: inline-block; /* Needed for cursor positioning */
+.name-highlight {
+    color: var(--secondary-color);
+    font-weight: 600;
 }
 
 .typewriter-cursor {
@@ -185,16 +186,17 @@ nav {
     50% { opacity: 0; }
 }
 
-/* Ensure the span keeps the accent color */
-.hero .hero-content h1 span {
-    color: var(--secondary-color);
-}
-
 .hero p {
     font-size: 18px;
     margin-bottom: 30px;
     opacity: 0.9;
 }
+
+
+.hero .hero-content h1 span {
+    color: var(--secondary-color);
+}
+
 
 .btn {
     display: inline-block;
@@ -204,7 +206,7 @@ nav {
     border-radius: 5px;
     text-decoration: none;
     font-weight: 500;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     border: none;
     cursor: pointer;
 }
@@ -214,6 +216,18 @@ nav {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
+
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
 
 .btn-secondary {
     background-color: transparent;
@@ -240,13 +254,13 @@ nav {
     margin-left: 8px;
 }
 
+
 .btn-download:hover {
     background-color: var(--primary-light);
     color: var(--on-primary);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-
 /* About Section */
 .section {
     padding: 100px 0;
@@ -313,7 +327,7 @@ nav {
     font-size: 14px;
     display: flex;
     align-items: center;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .skill:hover {
@@ -387,7 +401,7 @@ nav {
     background-color: var(--background);
     padding: 30px;
     border-radius: 10px;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
 }
@@ -446,7 +460,7 @@ nav {
     margin: 0 5px;
     cursor: pointer;
     font-weight: 500;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     border-radius: 5px;
     position: relative;
     overflow: hidden;
@@ -483,7 +497,7 @@ nav {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .portfolio-img {
@@ -561,7 +575,7 @@ nav {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
 }
 
@@ -602,7 +616,7 @@ nav {
     margin-right: 15px;
     object-fit: cover;
     border: 2px solid var(--secondary-color);
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .testimonial-card:hover .author-img {
@@ -645,7 +659,7 @@ nav {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .contact-item:hover {
@@ -662,7 +676,7 @@ nav {
     align-items: center;
     margin-right: 15px;
     color: var(--on-primary);
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .contact-item:hover .contact-icon {
@@ -685,7 +699,7 @@ nav {
     margin-right: 15px;
     color: var(--on-surface);
     text-decoration: none;
-    transition: all var(--transition-speed);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .social-link:hover {
@@ -728,6 +742,62 @@ textarea.form-control {
     min-height: 150px;
 }
 
+/* Form button states */
+#submitBtn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.3s;
+}
+
+.btn-text {
+    display: block;
+    transition: all 0.3s;
+}
+
+#submitBtn.sending .btn-text {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+#submitBtn.sending .btn-loading {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.form-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.form-message.success {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    display: block;
+}
+
+.form-message.error {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: #F44336;
+    display: block;
+}
+
+/* Footer */
 footer {
     background-color: var(--surface);
     padding: 30px 0;
@@ -771,32 +841,24 @@ footer {
     transform: translateY(-5px);
 }
 
-/* Custom Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+/* Theme ripple effect */
+.theme-ripple {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s ease-out;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+@keyframes ripple {
     to {
-        opacity: 1;
-        transform: translateY(0);
+        transform: scale(100);
+        opacity: 0;
     }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.pulse {
-    animation: pulse 2s infinite;
 }
 
 /* Responsive Styles */
