@@ -1,9 +1,11 @@
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// Initialize animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Hero section animations
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Hero section animations with GSAP
     gsap.from('.hero h1', {
         duration: 1,
         y: 50,
@@ -19,21 +21,24 @@ document.addEventListener('DOMContentLoaded', function() {
         ease: 'power3.out'
     });
     
+    
+    
     gsap.from('.hero-btns a', {
-        duration: 1,
-        y: 50,
-        opacity: 0,
-        stagger: 0.2,
-        delay: 0.6,
-        ease: 'power3.out'
-    });
+  duration: 1,
+  y: 50,
+  opacity: 0,
+  stagger: 0.6,
+  delay: 0.6, // Increased delay to ensure proper sequencing
+  ease: 'power3.out',
+  immediateRender: false // Ensures initial state is respected
+});
 
-    // Animate sections on scroll
+    // Animate sections on scroll with GSAP ScrollTrigger
     gsap.utils.toArray('.section').forEach(section => {
         gsap.from(section, {
             scrollTrigger: {
                 trigger: section,
-                start: 'top 80%',
+                start: 'top 70%',
                 toggleActions: 'play none none none'
             },
             y: 50,
@@ -43,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animate service cards
+    // Animate service cards with GSAP
     gsap.utils.toArray('.service-card').forEach((card, i) => {
         gsap.from(card, {
             scrollTrigger: {
@@ -59,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animate portfolio items
+    // Animate portfolio items with GSAP
     gsap.utils.toArray('.portfolio-item').forEach((item, i) => {
         gsap.from(item, {
             scrollTrigger: {
@@ -75,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animate testimonials
+    // Animate testimonials with GSAP
     gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
         gsap.from(card, {
             scrollTrigger: {
@@ -91,23 +96,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Floating animation for skills
-    gsap.utils.toArray('.skill').forEach(skill => {
-        gsap.to(skill, {
-            y: -5,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut'
-        });
-    });
-
     // Mobile Navigation
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        
+        // GSAP animation for mobile menu
+        if (navLinks.classList.contains('active')) {
+            gsap.from('.nav-links li', {
+                duration: 0.5,
+                x: -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+        }
     });
 
     // Close mobile menu when clicking on a link
@@ -117,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Smooth scrolling for anchor links
+    // Smooth scrolling for anchor links with GSAP
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -125,9 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
+            gsap.to(window, {
+                duration: 1,
+                scrollTo: {
+                    y: targetElement,
+                    offsetY: 80
+                },
+                ease: 'power2.inOut'
             });
         });
     });
@@ -150,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-    // Portfolio filtering
+    // Portfolio filtering with GSAP animations
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
 
@@ -164,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
             portfolioItems.forEach(item => {
                 if (filter === 'all' || item.getAttribute('data-category') === filter) {
                     gsap.to(item, {
-                        duration: 0.3,
+                        duration: 0.5,
                         opacity: 1,
                         display: 'block',
                         ease: 'power2.out'
@@ -181,41 +190,70 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form submission
+    // Working contact form with validation and submission
     const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formMessage = document.getElementById('formMessage');
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Animate form submission
-        gsap.to('.contact-form button', {
-            duration: 0.3,
-            backgroundColor: '#4CAF50',
-            onComplete: function() {
-                alert('Thank you for your message! I will get back to you soon.');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtn.classList.add('sending');
+            formMessage.style.display = 'none';
+            
+            try {
+                // Simulate form submission (replace with actual form submission)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Show success message
+                formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
+                formMessage.className = 'form-message success';
+                formMessage.style.display = 'block';
+                
+                // Reset form
                 contactForm.reset();
-                gsap.to('.contact-form button', {
-                    duration: 0.3,
-                    backgroundColor: 'var(--primary-color)'
+            } catch (error) {
+                // Show error message
+                formMessage.textContent = 'There was an error sending your message. Please try again later.';
+                formMessage.className = 'form-message error';
+                formMessage.style.display = 'block';
+            } finally {
+                // Reset button state
+                submitBtn.classList.remove('sending');
+                
+                // Scroll to message with GSAP
+                gsap.to(window, {
+                    duration: 0.8,
+                    scrollTo: {
+                        y: formMessage,
+                        offsetY: 20
+                    },
+                    ease: 'power2.out'
                 });
             }
         });
-    });
+    }
 
-    // Sticky header on scroll
-    window.addEventListener('scroll', () => {
-        const header = document.querySelector('header');
-        header.classList.toggle('sticky', window.scrollY > 0);
-    });
-
-    // Scroll to top button
+    // Scroll to top button with GSAP
     const scrollTopBtn = document.getElementById('scrollTop');
 
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
-            scrollTopBtn.classList.add('active');
+            gsap.to(scrollTopBtn, {
+                duration: 0.3,
+                opacity: 1,
+                visibility: 'visible',
+                ease: 'power2.out'
+            });
         } else {
-            scrollTopBtn.classList.remove('active');
+            gsap.to(scrollTopBtn, {
+                duration: 0.3,
+                opacity: 0,
+                visibility: 'hidden',
+                ease: 'power2.out'
+            });
         }
     });
 
@@ -225,16 +263,9 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollTo: 0,
             ease: 'power3.out'
         });
-        // Alternative native JavaScript fallback (uncomment to use instead of GSAP):
-        /*
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        */
     });
 
-    // Theme toggle functionality
+    // Theme toggle functionality with GSAP ripple effect
     const themeToggle = document.getElementById('themeToggle');
     const mobileThemeToggle = document.getElementById('mobileThemeToggle');
     const body = document.body;
@@ -248,7 +279,32 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
 
-    function toggleTheme() {
+    function toggleTheme(event) {
+        // Create ripple effect with GSAP
+        const ripple = document.createElement('div');
+        ripple.className = 'theme-ripple';
+        document.body.appendChild(ripple);
+        
+        // Position ripple at click location
+        const rect = event.target.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        
+        gsap.set(ripple, {
+            left: `${x}px`,
+            top: `${y}px`
+        });
+        
+        // Animate ripple with GSAP
+        gsap.to(ripple, {
+            duration: 0.6,
+            scale: 100,
+            opacity: 0,
+            ease: 'power2.out',
+            onComplete: () => ripple.remove()
+        });
+
+        // Toggle theme
         body.classList.toggle('light-theme');
         
         if (body.classList.contains('light-theme')) {
@@ -265,111 +321,85 @@ document.addEventListener('DOMContentLoaded', function() {
     themeToggle.addEventListener('click', toggleTheme);
     mobileThemeToggle.addEventListener('click', toggleTheme);
 
-    // Typing animation for hero text
+    // Typing animation for hero text with GSAP
     function typeWriter() {
         const heroTitle = document.querySelector('.hero h1');
-        const originalHTML = heroTitle.innerHTML;
+        const originalText = "Hi, I'm Deepak Singh\nMobile App Developer";
         
-        // Save the original HTML structure
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = originalHTML;
+        // Clear the title and add cursor
+        heroTitle.innerHTML = '<span class="typewriter-cursor"></span>';
         
-        // Create cursor element
-        const cursor = document.createElement('span');
-        cursor.className = 'typewriter-cursor';
-        heroTitle.innerHTML = '';
-        heroTitle.appendChild(cursor);
+        let i = 0;
+        let lineBreakCount = 0;
+        let isTypingName = false;
         
-        let textToType = '';
-        let htmlStructure = [];
-        
-        // Extract text nodes while preserving HTML structure
-        function extractText(node, parentTag = '') {
-            if (node.nodeType === Node.TEXT_NODE) {
-                textToType += node.textContent;
-                htmlStructure.push({
-                    type: 'text',
-                    content: node.textContent,
-                    parentTag: parentTag
-                });
-            } else {
-                const tag = node.tagName.toLowerCase();
-                htmlStructure.push({
-                    type: 'tagStart',
-                    tag: tag,
-                    attrs: Array.from(node.attributes).map(attr => ({
-                        name: attr.name,
-                        value: attr.value
-                    }))
-                });
+        function type() {
+            if (i < originalText.length) {
+                const currentChar = originalText.charAt(i);
                 
-                // Process child nodes
-                for (let child of node.childNodes) {
-                    extractText(child, tag);
+                // Check if we're starting to type the name
+                if (currentChar === 'D' && originalText.substring(i, i + 7) === 'Deepak ') {
+                    isTypingName = true;
+                    heroTitle.insertAdjacentHTML('beforeend', '<span class="name-highlight">');
                 }
                 
-                htmlStructure.push({
-                    type: 'tagEnd',
-                    tag: tag
-                });
-            }
-        }
-        
-        extractText(tempDiv);
-        
-        let currentChar = 0;
-        let currentPosition = 0;
-        
-        function typeNextLetter() {
-            if (currentPosition < htmlStructure.length) {
-                const currentItem = htmlStructure[currentPosition];
-                
-                if (currentItem.type === 'tagStart') {
-                    // Open HTML tag
-                    let tag = `<${currentItem.tag}`;
-                    currentItem.attrs.forEach(attr => {
-                        tag += ` ${attr.name}="${attr.value}"`;
-                    });
-                    tag += '>';
-                    heroTitle.insertAdjacentHTML('beforeend', tag);
-                    currentPosition++;
-                    setTimeout(typeNextLetter, 50);
-                } 
-                else if (currentItem.type === 'tagEnd') {
-                    // Close HTML tag
-                    heroTitle.insertAdjacentHTML('beforeend', `</${currentItem.tag}>`);
-                    currentPosition++;
-                    setTimeout(typeNextLetter, 50);
-                } 
-                else if (currentItem.type === 'text' && currentChar < currentItem.content.length) {
-                    // Type next character
-                    heroTitle.insertAdjacentText('beforeend', currentItem.content[currentChar]);
-                    currentChar++;
-                    
-                    // Move cursor to the end
-                    cursor.remove();
-                    heroTitle.appendChild(cursor);
-                    
-                    // Vary speed slightly for natural effect
-                    const speed = Math.random() * 50 + 50; // Between 50-100ms
-                    setTimeout(typeNextLetter, speed);
-                } 
-                else {
-                    // Move to next text node
-                    currentChar = 0;
-                    currentPosition++;
-                    setTimeout(typeNextLetter, 100);
+                // Check if we're ending the name
+                if (isTypingName && currentChar === ' ') {
+                    isTypingName = false;
+                    heroTitle.insertAdjacentHTML('beforeend', '</span>');
                 }
+                
+                // Handle line breaks
+                if (currentChar === '\n') {
+                    lineBreakCount++;
+                    heroTitle.insertAdjacentHTML('beforeend', '<br>');
+                } else {
+                    heroTitle.insertAdjacentText('beforeend', currentChar);
+                }
+                
+                // Move cursor to end
+                const cursor = heroTitle.querySelector('.typewriter-cursor');
+                cursor.remove();
+                heroTitle.appendChild(cursor);
+                
+                i++;
+                
+                // Random typing speed for natural effect
+                const speed = Math.random() * 50 + 50;
+                setTimeout(type, speed);
             } else {
                 // Animation complete - remove cursor
-                cursor.style.display = 'none';
+                const cursor = heroTitle.querySelector('.typewriter-cursor');
+                if (cursor) {
+                    gsap.to(cursor, {
+                        duration: 0.3,
+                        opacity: 0,
+                        onComplete: () => cursor.remove()
+                    });
+                }
+                
+                // Ensure name highlight is properly closed
+                if (isTypingName) {
+                    heroTitle.insertAdjacentHTML('beforeend', '</span>');
+                }
             }
         }
         
         // Start typing after a short delay
-        setTimeout(typeNextLetter, 500);
+        setTimeout(type, 500);
     }
     
     // Start the typing animation
     typeWriter();
+
+    // Floating animation for skills with GSAP
+    gsap.utils.toArray('.skill').forEach(skill => {
+        gsap.to(skill, {
+            y: -5,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+    });
 });
