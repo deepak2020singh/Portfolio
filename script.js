@@ -190,51 +190,90 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Working contact form with validation and submission
-    const contactForm = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formMessage = document.getElementById('formMessage');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+    // Working contact form with validation and submission
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMessage = document.getElementById('formMessage');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        submitBtn.classList.add('sending');
+        formMessage.style.display = 'none';
+        
+        try {
+            const formData = new FormData(contactForm);
             
-            // Show loading state
-            submitBtn.classList.add('sending');
-            formMessage.style.display = 'none';
-            
-            try {
-                // Simulate form submission (replace with actual form submission)
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                // Show success message
-                formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
-                formMessage.className = 'form-message success';
-                formMessage.style.display = 'block';
-                
-                // Reset form
-                contactForm.reset();
-            } catch (error) {
-                // Show error message
-                formMessage.textContent = 'There was an error sending your message. Please try again later.';
-                formMessage.className = 'form-message error';
-                formMessage.style.display = 'block';
-            } finally {
-                // Reset button state
-                submitBtn.classList.remove('sending');
-                
-                // Scroll to message with GSAP
-                gsap.to(window, {
-                    duration: 0.8,
-                    scrollTo: {
-                        y: formMessage,
-                        offsetY: 20
-                    },
-                    ease: 'power2.out'
-                });
+            const response = await fetch('send_email.php', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            // First check if we got any response at all
+            if (!response) {
+                throw new Error('No response from server');
             }
-        });
-    }
+
+            // Then check if it's JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text();
+                throw new Error(`Invalid response: ${text.substring(0, 100)}`);
+            }
+
+            const result = await response.json();
+            
+            if (!response.ok || !result.success) {
+                throw new Error(result.error || 'Submission failed');
+            }
+            
+            // Success handling
+            formMessage.textContent = result.message;
+            formMessage.className = 'form-message success';
+            contactForm.reset();
+            
+        } catch (error) {
+            // Error handling
+            console.error('Form submission error:', error);
+            formMessage.textContent = error.message;
+            formMessage.className = 'form-message error';
+            
+        } finally {
+            // Final cleanup
+            formMessage.style.display = 'block';
+            submitBtn.classList.remove('sending');
+            
+            // GSAP animation
+            gsap.fromTo(formMessage, 
+                { y: 20, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                }
+            );
+            
+            // Scroll to message
+            gsap.to(window, {
+                duration: 0.8,
+                scrollTo: {
+                    y: formMessage,
+                    offsetY: 20
+                },
+                ease: 'power2.out'
+            });
+        }
+    });
+}
+
+
 
     // Scroll to top button with GSAP
     const scrollTopBtn = document.getElementById('scrollTop');
