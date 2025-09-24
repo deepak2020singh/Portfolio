@@ -1,444 +1,457 @@
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// Theme Toggle Functionality
+const themeSwitch = document.getElementById('theme-switch');
+const body = document.body;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Set current year in footer
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
+// Check for saved theme preference or respect OS preference
+if (localStorage.getItem('theme') === 'dark' || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+    themeSwitch.checked = true;
+    body.classList.add('dark-mode');
+}
 
-    // Hero section animations with GSAP
-    gsap.from('.hero h1', {
-        duration: 1,
-        y: 50,
-        opacity: 0,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.hero p', {
-        duration: 1,
-        y: 50,
-        opacity: 0,
-        delay: 0.3,
-        ease: 'power3.out'
-    });
-    
-    
-    
-    gsap.from('.hero-btns a', {
-  duration: 1,
-  y: 50,
-  opacity: 0,
-  stagger: 0.6,
-  delay: 0.6, // Increased delay to ensure proper sequencing
-  ease: 'power3.out',
-  immediateRender: false // Ensures initial state is respected
+themeSwitch.addEventListener('change', function() {
+    if (this.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+    }
 });
 
-    // Animate sections on scroll with GSAP ScrollTrigger
-    gsap.utils.toArray('.section').forEach(section => {
-        gsap.from(section, {
-            scrollTrigger: {
-                trigger: section,
-                start: 'top 70%',
-                toggleActions: 'play none none none'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-        });
+// Mobile Navigation Toggle
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+navToggle.addEventListener('click', function() {
+    navMenu.classList.toggle('active');
+    this.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
     });
+});
 
-    // Animate service cards with GSAP
-    gsap.utils.toArray('.service-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: 'power3.out'
-        });
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero section animation
+gsap.from('.hero-title', {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    ease: 'power3.out'
+});
+
+gsap.from('.hero-subtitle', {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    delay: 0.3,
+    ease: 'power3.out'
+});
+
+gsap.from('.hero-description', {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    delay: 0.6,
+    ease: 'power3.out'
+});
+
+gsap.from('.hero-buttons', {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    delay: 0.9,
+    ease: 'power3.out'
+});
+
+gsap.from('.hero-image', {
+    duration: 1,
+    scale: 0.8,
+    opacity: 0,
+    delay: 1.2,
+    ease: 'power3.out'
+});
+
+// Floating elements animation
+gsap.to('.floating-element-1', {
+    y: -20,
+    rotation: 10,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    ease: 'power1.inOut'
+});
+
+gsap.to('.floating-element-2', {
+    y: -15,
+    rotation: -5,
+    duration: 2.5,
+    repeat: -1,
+    yoyo: true,
+    ease: 'power1.inOut',
+    delay: 0.5
+});
+
+gsap.to('.floating-element-3', {
+    y: -25,
+    rotation: 15,
+    duration: 3,
+    repeat: -1,
+    yoyo: true,
+    ease: 'power1.inOut',
+    delay: 1
+});
+
+// Section animations
+gsap.utils.toArray('section').forEach(section => {
+    gsap.from(section, {
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
     });
+});
 
-    // Animate portfolio items with GSAP
-    gsap.utils.toArray('.portfolio-item').forEach((item, i) => {
-        gsap.from(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: 'power3.out'
-        });
+// Skill bars animation
+gsap.utils.toArray('.skill-progress').forEach(bar => {
+    gsap.to(bar, {
+        scrollTrigger: {
+            trigger: bar,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        width: bar.getAttribute('data-width') + '%',
+        duration: 1.5,
+        ease: 'power3.out'
     });
+});
 
-    // Animate testimonials with GSAP
-    gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.2,
-            ease: 'power3.out'
-        });
+// Project cards animation
+gsap.utils.toArray('.project-card').forEach((card, i) => {
+    gsap.from(card, {
+        scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.2,
+        ease: 'power3.out'
     });
+});
 
-    // Mobile Navigation
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+// Service cards animation
+gsap.utils.toArray('.service-card').forEach((card, i) => {
+    gsap.from(card, {
+        scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+// Blog cards animation
+gsap.utils.toArray('.blog-card').forEach((card, i) => {
+    gsap.from(card, {
+        scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
+
+// Timeline animation
+gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+    gsap.from(item, {
+        scrollTrigger: {
+            trigger: item,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        x: i % 2 === 0 ? -100 : 100,
+        opacity: 0,
+        duration: 1,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
+
+// Text animation for section titles
+gsap.utils.toArray('.section-title').forEach(title => {
+    gsap.from(title, {
+        scrollTrigger: {
+            trigger: title,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+});
+
+// Navbar background on scroll
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    const backToTop = document.getElementById('back-to-top');
+    
+    if (window.scrollY > 50) {
+        navbar.style.background = 'var(--card-bg)';
+        navbar.style.boxShadow = '0 5px 15px var(--shadow)';
+        backToTop.classList.add('show');
+    } else {
+        navbar.style.background = 'transparent';
+        navbar.style.boxShadow = 'none';
+        backToTop.classList.remove('show');
+    }
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        // GSAP animation for mobile menu
-        if (navLinks.classList.contains('active')) {
-            gsap.from('.nav-links li', {
-                duration: 0.5,
-                x: -50,
-                opacity: 0,
-                stagger: 0.1,
-                ease: 'power2.out'
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 70,
+                behavior: 'smooth'
             });
         }
     });
+});
 
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+// Back to top functionality
+document.getElementById('back-to-top').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
+});
 
-    // Smooth scrolling for anchor links with GSAP
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: {
-                    y: targetElement,
-                    offsetY: 80
-                },
-                ease: 'power2.inOut'
-            });
-        });
+// Testimonials slider
+let currentTestimonial = 0;
+const testimonials = document.querySelectorAll('.testimonial-card');
+const testimonialCount = testimonials.length;
+
+function showTestimonial(index) {
+    testimonials.forEach(testimonial => {
+        testimonial.classList.remove('active');
     });
+    
+    testimonials[index].classList.add('active');
+    currentTestimonial = index;
+}
 
-    // Download CV fallback
-    document.querySelector('.btn-download').addEventListener('click', function(e) {
-        fetch('deepakcv.pdf')
-            .then(response => {
-                if (!response.ok) {
-                    e.preventDefault();
-                    const proceed = confirm('CV file is not available. Would you like to view it in a new tab instead?');
-                    if (proceed) {
-                        window.open('deepakcv.pdf', '_blank');
-                    }
-                }
-            })
-            .catch(error => {
-                e.preventDefault();
-                alert('CV download is currently unavailable. Please contact me directly for my resume.');
-            });
-    });
+document.querySelector('.testimonial-next').addEventListener('click', function() {
+    let nextIndex = currentTestimonial + 1;
+    if (nextIndex >= testimonialCount) nextIndex = 0;
+    showTestimonial(nextIndex);
+});
 
-    // Portfolio filtering with GSAP animations
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
+document.querySelector('.testimonial-prev').addEventListener('click', function() {
+    let prevIndex = currentTestimonial - 1;
+    if (prevIndex < 0) prevIndex = testimonialCount - 1;
+    showTestimonial(prevIndex);
+});
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(btn => btn.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const filter = btn.getAttribute('data-filter');
-            
-            portfolioItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                    gsap.to(item, {
-                        duration: 0.5,
-                        opacity: 1,
-                        display: 'block',
-                        ease: 'power2.out'
-                    });
-                } else {
-                    gsap.to(item, {
-                        duration: 0.3,
-                        opacity: 0,
-                        display: 'none',
-                        ease: 'power2.out'
-                    });
-                }
-            });
-        });
-    });
+// Auto-rotate testimonials
+setInterval(() => {
+    let nextIndex = currentTestimonial + 1;
+    if (nextIndex >= testimonialCount) nextIndex = 0;
+    showTestimonial(nextIndex);
+}, 5000);
 
-
-    // Working contact form with validation and submission
-const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('submitBtn');
-const formMessage = document.getElementById('formMessage');
-
+// Form submission
+const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Show loading state
-        submitBtn.classList.add('sending');
-        formMessage.style.display = 'none';
+        // Get form data
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const subject = formData.get('subject');
+        const message = formData.get('message');
         
-        try {
-            const formData = new FormData(contactForm);
-            
-            const response = await fetch('send_email.php', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+        // Here you would typically send the data to a server
+        // For this example, we'll just show an alert
+        alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
+        
+        // Reset the form
+        this.reset();
+    });
+}
 
-            // First check if we got any response at all
-            if (!response) {
-                throw new Error('No response from server');
-            }
-
-            // Then check if it's JSON
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                const text = await response.text();
-                throw new Error(`Invalid response: ${text.substring(0, 100)}`);
-            }
-
-            const result = await response.json();
-            
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || 'Submission failed');
-            }
-            
-            // Success handling
-            formMessage.textContent = result.message;
-            formMessage.className = 'form-message success';
-            contactForm.reset();
-            
-        } catch (error) {
-            // Error handling
-            console.error('Form submission error:', error);
-            formMessage.textContent = error.message;
-            formMessage.className = 'form-message error';
-            
-        } finally {
-            // Final cleanup
-            formMessage.style.display = 'block';
-            submitBtn.classList.remove('sending');
-            
-            // GSAP animation
-            gsap.fromTo(formMessage, 
-                { y: 20, opacity: 0 },
-                { 
-                    y: 0, 
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: 'power2.out'
-                }
-            );
-            
-            // Scroll to message
-            gsap.to(window, {
-                duration: 0.8,
-                scrollTo: {
-                    y: formMessage,
-                    offsetY: 20
-                },
-                ease: 'power2.out'
-            });
+// Newsletter form submission
+const newsletterForm = document.querySelector('.newsletter-form');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Simple validation
+        if (email && email.includes('@')) {
+            alert('Thank you for subscribing to our newsletter!');
+            this.reset();
+        } else {
+            alert('Please enter a valid email address.');
         }
     });
 }
 
-
-
-    // Scroll to top button with GSAP
-    const scrollTopBtn = document.getElementById('scrollTop');
-
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            gsap.to(scrollTopBtn, {
-                duration: 0.3,
-                opacity: 1,
-                visibility: 'visible',
-                ease: 'power2.out'
-            });
-        } else {
-            gsap.to(scrollTopBtn, {
-                duration: 0.3,
-                opacity: 0,
-                visibility: 'hidden',
-                ease: 'power2.out'
-            });
-        }
+// Resume download functionality
+const resumeDownload = document.getElementById('resume-download');
+if (resumeDownload) {
+    resumeDownload.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Create a simple PDF using jsPDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Add content to the PDF
+        doc.setFontSize(22);
+        doc.text('Deepak Singh - Android Developer', 20, 30);
+        
+        doc.setFontSize(16);
+        doc.text('Professional Summary', 20, 50);
+        doc.setFontSize(12);
+        doc.text('Experienced Android developer with 4+ years of expertise in building modern,', 20, 60);
+        doc.text('user-friendly mobile applications using Jetpack Compose, Kotlin, and Firebase.', 20, 67);
+        
+        doc.setFontSize(16);
+        doc.text('Technical Skills', 20, 85);
+        doc.setFontSize(12);
+        doc.text('- Jetpack Compose, Kotlin, Java', 20, 95);
+        doc.text('- MVVM Architecture, Room Database', 20, 102);
+        doc.text('- Firebase, Ktor Client, Koin', 20, 109);
+        doc.text('- Git, Android Studio, Figma', 20, 116);
+        
+        doc.setFontSize(16);
+        doc.text('Experience', 20, 134);
+        doc.setFontSize(12);
+        doc.text('Senior Android Developer - Tech Solutions Inc. (2022-Present)', 20, 144);
+        doc.text('Android Developer - Mobile First Co. (2020-2022)', 20, 151);
+        doc.text('Junior Android Developer - StartUp Ventures (2019-2020)', 20, 158);
+        
+        // Save the PDF
+        doc.save('Deepak_Singh_Resume.pdf');
     });
+}
 
-    scrollTopBtn.addEventListener('click', () => {
-        gsap.to(window, {
-            duration: 1,
-            scrollTo: 0,
-            ease: 'power3.out'
-        });
+// Bubble animation enhancement
+function enhanceBubbles() {
+    const bubbles = document.querySelectorAll('.bubble');
+    
+    bubbles.forEach(bubble => {
+        // Randomize initial positions
+        const randomLeft = Math.random() * 100;
+        bubble.style.left = `${randomLeft}%`;
+        
+        // Randomize sizes
+        const randomSize = 20 + Math.random() * 50;
+        bubble.style.width = `${randomSize}px`;
+        bubble.style.height = `${randomSize}px`;
+        
+        // Randomize animation delays and durations
+        const randomDelay = Math.random() * 5;
+        const randomDuration = 10 + Math.random() * 15;
+        
+        bubble.style.animationDelay = `${randomDelay}s`;
+        bubble.style.animationDuration = `${randomDuration}s`;
     });
+}
 
-    // Theme toggle functionality with GSAP ripple effect
-    const themeToggle = document.getElementById('themeToggle');
-    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-    const body = document.body;
-
-    const currentTheme = localStorage.getItem('theme') || 
-                        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-    if (currentTheme === 'light') {
-        body.classList.add('light-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+// Parallax effect for hero section
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    
+    if (hero && heroContent) {
+        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
+});
 
-    function toggleTheme(event) {
-        // Create ripple effect with GSAP
-        const ripple = document.createElement('div');
-        ripple.className = 'theme-ripple';
-        document.body.appendChild(ripple);
-        
-        // Position ripple at click location
-        const rect = event.target.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        gsap.set(ripple, {
-            left: `${x}px`,
-            top: `${y}px`
-        });
-        
-        // Animate ripple with GSAP
-        gsap.to(ripple, {
-            duration: 0.6,
-            scale: 100,
-            opacity: 0,
-            ease: 'power2.out',
-            onComplete: () => ripple.remove()
-        });
-
-        // Toggle theme
-        body.classList.toggle('light-theme');
-        
-        if (body.classList.contains('light-theme')) {
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', 'light');
-        } else {
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            mobileThemeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            localStorage.setItem('theme', 'dark');
-        }
-    }
-
-    themeToggle.addEventListener('click', toggleTheme);
-    mobileThemeToggle.addEventListener('click', toggleTheme);
-
-    // Typing animation for hero text with GSAP
-    function typeWriter() {
-        const heroTitle = document.querySelector('.hero h1');
-        const originalText = "Hi, I'm Deepak Singh\nMobile App Developer";
-        
-        // Clear the title and add cursor
-        heroTitle.innerHTML = '<span class="typewriter-cursor"></span>';
-        
-        let i = 0;
-        let lineBreakCount = 0;
-        let isTypingName = false;
-        
-        function type() {
-            if (i < originalText.length) {
-                const currentChar = originalText.charAt(i);
-                
-                // Check if we're starting to type the name
-                if (currentChar === 'D' && originalText.substring(i, i + 7) === 'Deepak ') {
-                    isTypingName = true;
-                    heroTitle.insertAdjacentHTML('beforeend', '<span class="name-highlight">');
-                }
-                
-                // Check if we're ending the name
-                if (isTypingName && currentChar === ' ') {
-                    isTypingName = false;
-                    heroTitle.insertAdjacentHTML('beforeend', '</span>');
-                }
-                
-                // Handle line breaks
-                if (currentChar === '\n') {
-                    lineBreakCount++;
-                    heroTitle.insertAdjacentHTML('beforeend', '<br>');
-                } else {
-                    heroTitle.insertAdjacentText('beforeend', currentChar);
-                }
-                
-                // Move cursor to end
-                const cursor = heroTitle.querySelector('.typewriter-cursor');
-                cursor.remove();
-                heroTitle.appendChild(cursor);
-                
-                i++;
-                
-                // Random typing speed for natural effect
-                const speed = Math.random() * 50 + 50;
-                setTimeout(type, speed);
-            } else {
-                // Animation complete - remove cursor
-                const cursor = heroTitle.querySelector('.typewriter-cursor');
-                if (cursor) {
-                    gsap.to(cursor, {
-                        duration: 0.3,
-                        opacity: 0,
-                        onComplete: () => cursor.remove()
-                    });
-                }
-                
-                // Ensure name highlight is properly closed
-                if (isTypingName) {
-                    heroTitle.insertAdjacentHTML('beforeend', '</span>');
-                }
+// Initialize enhancements when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    enhanceBubbles();
+    
+    // Add intersection observer for elements
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
             }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.skill-category, .project-card, .timeline-item, .service-card, .blog-card').forEach(el => {
+        observer.observe(el);
+    });
+});
+
+// Add a simple typing effect for the hero subtitle
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
         }
-        
-        // Start typing after a short delay
-        setTimeout(type, 500);
     }
     
-    // Start the typing animation
-    typeWriter();
+    type();
+}
 
-    // Floating animation for skills with GSAP
-    gsap.utils.toArray('.skill').forEach(skill => {
-        gsap.to(skill, {
-            y: -5,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut'
-        });
-    });
+// Initialize typing effect when page loads
+window.addEventListener('load', function() {
+    const subtitle = document.querySelector('.hero-subtitle');
+    if (subtitle) {
+        const originalText = subtitle.textContent;
+        typeWriter(subtitle, originalText, 100);
+    }
 });
