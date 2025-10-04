@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Modern Android Apps with Jetpack Compose - Deepak Singh</title>
+    <meta name="description" content="Learn how to build modern Android applications using Jetpack Compose, Kotlin, and MVVM architecture in this in-depth guide.">
+    <meta name="keywords" content="Android, Jetpack Compose, Kotlin, MVVM, Mobile Development">
+    <meta name="author" content="Deepak Singh">
+    <meta property="og:title" content="Building Modern Android Apps with Jetpack Compose">
+    <meta property="og:description" content="Learn how to build modern Android applications using Jetpack Compose, Kotlin, and MVVM architecture in this in-depth guide.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://example.com/blog-post">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="BlogPost.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch">
+        <label for="theme-switch" class="theme-toggle-label">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+            <span class="theme-toggle-ball"></span>
+        </label>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Deepak Singh</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#blog" class="nav-link">Blog</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <div class="blog-hero-content">
+                <h1 class="blog-title">Building Modern Android Apps with Jetpack Compose</h1>
+                <div class="blog-meta">
+                    <span class="blog-date">Published: October 4, 2025</span>
+                    <div class="blog-tags">
+                        <span>Android</span>
+                        <span>Jetpack Compose</span>
+                        <span>Kotlin</span>
+                    </div>
+                </div>
+                <div class="blog-hero-image">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Jetpack Compose UI" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container">
+            <div class="blog-main">
+                <article>
+                    <p class="intro">Jetpack Compose is revolutionizing Android development by offering a modern, declarative approach to building user interfaces. In this guide, we’ll explore how to leverage Jetpack Compose with Kotlin and MVVM architecture to create scalable and maintainable Android applications.</p>
+                    <h2>Why Jetpack Compose?</h2>
+                    <p>Unlike traditional XML-based layouts, Jetpack Compose allows developers to build UIs using Kotlin’s expressive syntax, reducing boilerplate code and improving productivity. Its reactive nature makes it easier to manage state and create dynamic interfaces.</p>
+                    <h3>Key Benefits</h3>
+                    <ul>
+                        <li>Declarative UI: Write UI as composable functions.</li>
+                        <li>Less Boilerplate: No XML layouts or View bindings.</li>
+                        <li>State Management: Seamless integration with LiveData and StateFlow.</li>
+                    </ul>
+                    <h2>Sample Code: Creating a Composable</h2>
+                    <pre><code class="language-kotlin">@Composable
+fun Greeting(name: String) {
+    Text(
+        text = "Hello, $name!",
+        style = MaterialTheme.typography.h5,
+        modifier = Modifier.padding(16.dp)
+    )
+}</code></pre>
+                    <p>This simple composable displays a greeting with styled text. Notice how modifiers allow fine-grained control over UI elements.</p>
+                    <h2>Integrating with MVVM</h2>
+                    <p>Pair Jetpack Compose with MVVM to structure your app effectively. Use ViewModels to manage UI state and expose data via StateFlow or LiveData.</p>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="MVVM Architecture Diagram" loading="lazy" class="content-image">
+                    <p>By combining Compose with MVVM, you ensure a clean separation of concerns, making your app easier to test and maintain.</p>
+                </article>
+                <aside class="blog-sidebar">
+                    <div class="author-bio">
+                        <h3>About the Author</h3>
+                        <div class="author-content">
+                            <img src="https://i.pravatar.cc/150" alt="Deepak Singh" loading="lazy">
+                            <div>
+                                <h4>Deepak Singh</h4>
+                                <p>Android Developer with 4+ years of experience in building modern apps using Jetpack Compose and Kotlin. Passionate about clean code and innovative UI design.</p>
+                                <div class="social-links">
+                                    <a href="https://github.com" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                                    <a href="https://linkedin.com" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://twitter.com" aria-label="Twitter Profile"><i class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <div class="container">
+            <h2 class="section-title">Related Posts</h2>
+            <div class="related-posts-grid">
+                <div class="related-post-card" data-tilt>
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Firebase Guide" loading="lazy">
+                    <div class="related-post-content">
+                        <h3>Mastering Firebase in Android Apps</h3>
+                        <p>Learn how to integrate Firebase for authentication, real-time database, and analytics.</p>
+                        <a href="#" class="related-post-link" aria-label="Read Mastering Firebase in Android Apps">Read More</a>
+                    </div>
+                </div>
+                <div class="related-post-card" data-tilt>
+                    <img src="https://images.unsplash.com/photo-1516321310764-8d8c9437e6b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Kotlin Coroutines" loading="lazy">
+                    <div class="related-post-content">
+                        <h3>Kotlin Coroutines for Async Programming</h3>
+                        <p>Simplify asynchronous tasks in Android with Kotlin Coroutines and Flow.</p>
+                        <a href="#" class="related-post-link" aria-label="Read Kotlin Coroutines for Async Programming">Read More</a>
+                    </div>
+                </div>
+                <div class="related-post-card" data-tilt>
+                    <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="MVVM Guide" loading="lazy">
+                    <div class="related-post-content">
+                        <h3>Deep Dive into MVVM Architecture</h3>
+                        <p>Explore the MVVM pattern for building scalable Android applications.</p>
+                        <a href="#" class="related-post-link" aria-label="Read Deep Dive into MVVM Architecture">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="comments">
+        <div class="container">
+            <h2 class="section-title">Comments</h2>
+            <form class="comment-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required aria-label="Your Name">
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Your Comment" rows="5" required aria-label="Your Comment"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+            <div class="comment-list">
+                <div class="comment">
+                    <div class="comment-author">
+                        <img src="https://i.pravatar.cc/60?img=1" alt="Sarah Johnson" loading="lazy">
+                        <div>
+                            <h4>Sarah Johnson</h4>
+                            <span>October 4, 2025</span>
+                        </div>
+                    </div>
+                    <p>Great article! Jetpack Compose has made UI development so much easier. Thanks for the clear explanation!</p>
+                </div>
+                <div class="comment">
+                    <div class="comment-author">
+                        <img src="https://i.pravatar.cc/60?img=2" alt="Michael Chen" loading="lazy">
+                        <div>
+                            <h4>Michael Chen</h4>
+                            <span>October 3, 2025</span>
+                        </div>
+                    </div>
+                    <p>Really helpful code snippets. Can you share more about integrating Compose with Room?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>Deepak Singh</h3>
+                    <p>Android Developer specializing in modern technologies and best practices to create exceptional mobile experiences.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">App Development</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Consultation</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new projects and articles.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" aria-label="Your Email">
+                        <button type="submit"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Deepak Singh. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particle Background -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Building Modern Android Apps with Jetpack Compose",
+        "datePublished": "2025-10-04",
+        "author": {
+            "@type": "Person",
+            "name": "Deepak Singh",
+            "url": "https://example.com"
+        },
+        "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+        "publisher": {
+            "@type": "Person",
+            "name": "Deepak Singh"
+        },
+        "description": "Learn how to build modern Android applications using Jetpack Compose, Kotlin, and MVVM architecture in this in-depth guide."
+    }
+    </script>
+
+    <script src="Blog.js"></script>
+</body>
+</html>
