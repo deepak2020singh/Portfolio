@@ -1,5 +1,3 @@
-
-
 // Theme Toggle Functionality
 const themeSwitch = document.getElementById('theme-switch');
 const body = document.body;
@@ -103,6 +101,20 @@ function initScrollAnimations() {
         ease: 'power3.out'
     });
 
+    // Skill bars animation in About
+    gsap.utils.toArray('.skill-progress').forEach((progress, index) => {
+        gsap.to(progress, {
+            scrollTrigger: {
+                trigger: '#about',
+                start: 'top 80%',
+            },
+            width: progress.dataset.width + '%',
+            duration: 1.5,
+            ease: 'power2.out',
+            delay: index * 0.2
+        });
+    });
+
     // Skills section animations
     gsap.utils.toArray('.skill-category').forEach((category, index) => {
         gsap.from(category, {
@@ -192,6 +204,30 @@ function initScrollAnimations() {
         });
     } else {
         console.error('Certifications section not found in the DOM');
+    }
+
+    // Achievements section animations
+    const achievementsSection = document.getElementById('achievements');
+    if (achievementsSection) {
+        gsap.utils.toArray('.achievement-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 100,
+                opacity: 0,
+                rotation: index % 2 === 0 ? -15 : 15,
+                duration: 1,
+                delay: index * 0.2,
+                ease: 'elastic.out(1, 0.5)',
+                stagger: 0.1
+            });
+        });
+    } else {
+        console.error('Achievements section not found in the DOM');
     }
 
     // Services section animations
@@ -285,14 +321,36 @@ function initBackToTop() {
 function initMobileNavigation() {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    if (!navToggle || !navMenu) {
-        console.error('Navigation toggle or menu not found in the DOM');
+    const navOverlay = document.getElementById('nav-overlay');
+    const navIcon = document.getElementById('nav-icon');
+    if (!navToggle || !navMenu || !navOverlay || !navIcon) {
+        console.error('Navigation elements not found in the DOM');
         return;
     }
 
     navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
+        const isActive = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active', isActive);
+        navOverlay.classList.toggle('active', isActive);
+        if (isActive) {
+            navIcon.classList.remove('fa-bars');
+            navIcon.classList.add('fa-times');
+            gsap.fromTo('.nav-link', 
+                {x: -280, opacity: 0},
+                {x: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power3.out'}
+            );
+        } else {
+            navIcon.classList.remove('fa-times');
+            navIcon.classList.add('fa-bars');
+        }
+    });
+
+    navOverlay.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        navOverlay.classList.remove('active');
+        navIcon.classList.remove('fa-times');
+        navIcon.classList.add('fa-bars');
     });
 
     // Close menu when clicking a link
@@ -300,6 +358,9 @@ function initMobileNavigation() {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+            navOverlay.classList.remove('active');
+            navIcon.classList.remove('fa-times');
+            navIcon.classList.add('fa-bars');
         });
     });
 }
@@ -570,7 +631,3 @@ function initTypingEffect() {
 
     type();
 }
-
-
-
-
