@@ -6,7 +6,7 @@
     <title>Deepak Singh - Android Developer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   l̥<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -26,7 +26,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#home">Deepak Singh</a>
+                <a href="#home">Portfolio</a>
             </div>
             <div class="nav-menu" id="nav-menu">
                 <a href="#home" class="nav-link">Home</a>
@@ -42,12 +42,11 @@
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <i class="fas fa-bars" id="nav-icon"></i>
             </div>
         </div>
     </nav>
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -116,25 +115,37 @@
                     <h3>Core Technologies</h3>
                     <div class="skills-list">
                         <div class="skill-item">
-                            <span>Jetpack Compose</span>
+                            <div class="skill-header">
+                                <span class="skill-name">Jetpack Compose</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
                             <div class="skill-bar">
                                 <div class="skill-progress" data-width="95"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>Kotlin</span>
+                            <div class="skill-header">
+                                <span class="skill-name">Kotlin</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
                             <div class="skill-bar">
                                 <div class="skill-progress" data-width="90"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>Firebase</span>
+                            <div class="skill-header">
+                                <span class="skill-name">Firebase</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
                             <div class="skill-bar">
                                 <div class="skill-progress" data-width="85"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>MVVM Architecture</span>
+                            <div class="skill-header">
+                                <span class="skill-name">MVVM Architecture</span>
+                                <span class="skill-percentage">88%</span>
+                            </div>
                             <div class="skill-bar">
                                 <div class="skill-progress" data-width="88"></div>
                             </div>
@@ -517,6 +528,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
     <!-- Services Section -->
     <section id="services" class="services">
