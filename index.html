@@ -6,19 +6,20 @@
 <title>Deepak Singh — Android Developer</title>
 <meta name="description" content="Deepak Singh, Android developer specializing in Kotlin, Jetpack Compose, and modern app architecture.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="grain"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <!-- Progress + Theme -->
-<div class="scroll-progress"><div class="scroll-progress-bar" id="progress-bar"></div></div>
+<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="progress-bar"></div></div>
 
 <div class="theme-toggle">
-  <input type="checkbox" id="theme-switch">
+  <input type="checkbox" id="theme-switch" aria-label="Toggle light and dark mode">
   <label for="theme-switch" class="theme-toggle-label">
     <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
     <span class="theme-toggle-ball"></span>
@@ -56,7 +57,7 @@
     <div class="hero-text">
       <p class="log-tag"><span class="log-d">D/</span>PROFILE <span class="log-time">— building since 2019</span></p>
       <h1 class="hero-title">Deepak Singh</h1>
-      <p class="hero-role">Android Developer, <span class="hero-role-rotate" id="role-rotate">Kotlin</span></p>
+      <p class="hero-role">Android Developer, <span class="hero-role-rotate" id="role-rotate">Kotlin</span><span class="typing-cursor">|</span></p>
       <p class="hero-description">I design and ship native Android apps end to end — from Room schemas and repositories to Compose UI that feels inevitable. Currently building resilient, offline-first products with MVVM, Koin, and Firebase/Supabase.</p>
       <div class="hero-buttons">
         <a href="#contact" class="btn btn-primary">Start a project</a>
@@ -98,7 +99,7 @@
       <div class="float-chip chip-4"><i class="fas fa-cube"></i> MVVM</div>
     </div>
   </div>
-  <div class="scroll-indicator"><span>Scroll</span><i class="fas fa-chevron-down"></i></div>
+  <div class="scroll-indicator" aria-hidden="true"><span>Scroll</span><i class="fas fa-chevron-down"></i></div>
 </section>
 
 <!-- About -->
@@ -113,7 +114,7 @@
         <div class="about-highlights">
           <div class="highlight-item"><i class="fas fa-mobile-alt"></i><div><strong>50+</strong><span>Apps shipped</span></div></div>
           <div class="highlight-item"><i class="fas fa-users"></i><div><strong>100K+</strong><span>Users reached</span></div></div>
-          <div class="highlight-item"><i class="fas fa-award"></i><div><strong>5+</strong><span>Awards & recognitions</span></div></div>
+          <div class="highlight-item"><i class="fas fa-award"></i><div><strong>5+</strong><span>Awards &amp; recognitions</span></div></div>
         </div>
       </div>
       <div class="about-skills">
@@ -559,7 +560,7 @@
         </form>
       </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2026 Deepak Singh. All rights reserved.</p></div>
+    <div class="footer-bottom"><p>&copy; 2024 Deepak Singh. All rights reserved.</p></div>
   </div>
 </footer>
 
