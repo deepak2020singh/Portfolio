@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  gsap.registerPlugin(ScrollTrigger);
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
 
   initTheme();
   initNav();
@@ -21,17 +23,17 @@ function initTheme() {
   const themeSwitch = document.getElementById('theme-switch');
   if (!themeSwitch) return;
   const saved = localStorage.getItem('theme');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  if (saved === 'light' || (!saved && prefersLight === false ? false : saved === 'light')) {
-    // default stays dark unless explicitly saved as light
-  }
+  
+  // Default is dark. Apply light mode only if saved is 'light'
   if (saved === 'light') {
     document.body.classList.add('light-mode');
     themeSwitch.checked = true;
   }
+
   themeSwitch.addEventListener('change', () => {
-    document.body.classList.toggle('light-mode', themeSwitch.checked);
-    localStorage.setItem('theme', themeSwitch.checked ? 'light' : 'dark');
+    const isLight = themeSwitch.checked;
+    document.body.classList.toggle('light-mode', isLight);
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 }
 
@@ -51,12 +53,16 @@ function initNav() {
       navMenu.classList.remove('active');
       navToggle.classList.remove('active');
       navOverlay.classList.remove('active');
+      document.body.style.overflow = '';
     };
+    
     navToggle.addEventListener('click', () => {
       const isActive = navMenu.classList.toggle('active');
       navToggle.classList.toggle('active', isActive);
       navOverlay.classList.toggle('active', isActive);
+      document.body.style.overflow = isActive ? 'hidden' : '';
     });
+    
     navOverlay.addEventListener('click', closeMenu);
     document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', closeMenu));
   }
@@ -75,6 +81,7 @@ function initScrollProgress() {
 
 /* Hero entrance timeline */
 function initHeroAnimations() {
+  if (!window.gsap) return;
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   tl.from('.log-tag', { y: -20, opacity: 0, duration: 0.6 })
     .from('.hero-title', { y: 40, opacity: 0, duration: 0.9 }, '-=0.3')
@@ -100,6 +107,7 @@ function initHeroAnimations() {
 
 /* Parallax on hero background + phone */
 function initParallax() {
+  if (!window.gsap || !window.ScrollTrigger) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   gsap.to('.hero-glow', {
@@ -137,6 +145,8 @@ function initParallax() {
 
 /* Generic scroll reveals for repeated card patterns */
 function initSectionReveals() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
   const groups = [
     { sel: '.highlight-item', y: 24, stagger: 0.1 },
     { sel: '.skill-category', y: 40, stagger: 0.12 },
@@ -178,6 +188,7 @@ function initSectionReveals() {
       y: 24, opacity: 0, duration: 0.8, ease: 'power3.out'
     });
   });
+  
   gsap.utils.toArray('.log-tag').forEach(tag => {
     if (tag.closest('.hero')) return;
     gsap.from(tag, {
@@ -211,6 +222,7 @@ function initSectionReveals() {
 
 /* Animated stat counters */
 function initCounters() {
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.utils.toArray('.stat-num').forEach(el => {
     const target = parseFloat(el.dataset.count);
     const counter = { val: 0 };
@@ -232,6 +244,7 @@ function initCounters() {
 
 /* Skill bars fill on scroll */
 function initSkillBars() {
+  if (!window.gsap || !window.ScrollTrigger) return;
   gsap.utils.toArray('.skill-progress').forEach(bar => {
     gsap.to(bar, {
       width: bar.dataset.width + '%',
@@ -265,17 +278,23 @@ function initTestimonials() {
     index = (i + cards.length) % cards.length;
     cards[index].classList.add('active');
     dots[index].classList.add('active');
-    gsap.fromTo(cards[index], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
+    
+    if (window.gsap) {
+      gsap.fromTo(cards[index], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
+    }
   }
 
   prevBtn && prevBtn.addEventListener('click', () => show(index - 1));
   nextBtn && nextBtn.addEventListener('click', () => show(index + 1));
 
   let auto = setInterval(() => show(index + 1), 6000);
-  dotsWrap.closest('.testimonials-slider').addEventListener('mouseenter', () => clearInterval(auto));
-  dotsWrap.closest('.testimonials-slider').addEventListener('mouseleave', () => {
-    auto = setInterval(() => show(index + 1), 6000);
-  });
+  const slider = dotsWrap.closest('.testimonials-slider');
+  if (slider) {
+    slider.addEventListener('mouseenter', () => clearInterval(auto));
+    slider.addEventListener('mouseleave', () => {
+      auto = setInterval(() => show(index + 1), 6000);
+    });
+  }
 }
 
 /* Typing effect for hero role */
