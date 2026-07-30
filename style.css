@@ -1,4 +1,6 @@
-
+/* =========================================
+   VARIABLES & THEME SETUP
+========================================= */
 :root {
     /* Dark Mode (Default) */
     --primary: #3DDC84; /* Android Green */
@@ -152,12 +154,10 @@ section {
     transition: width 0.1s linear;
 }
 
-/* =========================================
-   THEME TOGGLE (COMPACT)
-========================================= */
+/* Theme Toggle */
 .theme-toggle {
     position: fixed;
-    top: 14px;
+    top: 20px;
     right: 20px;
     z-index: 1000;
 }
@@ -170,19 +170,19 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 52px;
-    height: 26px;
+    width: 60px;
+    height: 30px;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 50px;
-    padding: 4px 9px;
+    padding: 5px 10px;
     position: relative;
     cursor: pointer;
-    box-shadow: 0 4px 12px var(--shadow);
+    box-shadow: 0 4px 15px var(--shadow);
 }
 
 .theme-toggle-label i {
-    font-size: 11px;
+    font-size: 12px;
     z-index: 1;
     color: var(--text-light);
 }
@@ -192,10 +192,10 @@ section {
 
 .theme-toggle-ball {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
     background: var(--primary);
     border-radius: 50%;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -203,18 +203,18 @@ section {
 }
 
 #theme-switch:checked + .theme-toggle-label .theme-toggle-ball {
-    transform: translateX(26px);
+    transform: translateX(30px);
 }
 
 /* =========================================
-   NAVIGATION (COMPACT)
+   NAVIGATION
 ========================================= */
 .navbar {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
     z-index: 999;
-    padding: 10px 0; /* Reduced from 20px */
+    padding: 20px 0;
     transition: var(--transition);
 }
 
@@ -223,7 +223,7 @@ section {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    padding: 6px 0; /* Reduced from 15px */
+    padding: 15px 0;
 }
 
 body.light-mode .navbar.scrolled {
@@ -237,28 +237,27 @@ body.light-mode .navbar.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px; /* Reduced from 70px */
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 8px; /* Reduced from 10px */
+    gap: 10px;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 1.1rem; /* Reduced from 1.2rem */
+    font-size: 1.2rem;
 }
 
 .logo-mark {
-    width: 32px; /* Reduced from 36px */
-    height: 32px; /* Reduced from 36px */
+    width: 36px;
+    height: 36px;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 7px;
-    font-size: 0.85rem; /* Reduced from 0.9rem */
+    border-radius: 8px;
+    font-size: 0.9rem;
     box-shadow: 0 4px 10px var(--glow);
 }
 
@@ -266,13 +265,13 @@ body.light-mode .navbar.scrolled {
 
 .nav-menu {
     display: flex;
-    gap: 22px; /* Reduced from 25px */
+    gap: 25px;
     align-items: center;
 }
 
 .nav-link {
     font-weight: 500;
-    font-size: 0.9rem; /* Reduced from 0.95rem */
+    font-size: 0.95rem;
     color: var(--text-light);
     transition: color 0.3s ease;
     position: relative;
@@ -283,7 +282,7 @@ body.light-mode .navbar.scrolled {
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 0;
     width: 0;
     height: 2px;
@@ -296,7 +295,7 @@ body.light-mode .navbar.scrolled {
 .nav-cta {
     background: var(--primary);
     color: #fff !important;
-    padding: 6px 16px; /* Reduced from 8px 18px */
+    padding: 8px 18px;
     border-radius: 50px;
     box-shadow: 0 4px 15px var(--glow);
 }
@@ -470,18 +469,6 @@ body.light-mode .navbar.scrolled {
     font-weight: 600;
 }
 
-.typing-cursor {
-    color: var(--primary);
-    font-weight: bold;
-    margin-left: 2px;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
 .hero-description {
     font-size: 1.1rem;
     color: var(--text-light);
@@ -511,7 +498,6 @@ body.light-mode .navbar.scrolled {
     font-weight: 700;
     color: var(--primary);
     font-family: 'Space Grotesk', sans-serif;
-    display: inline;
 }
 
 .stat-suffix {
